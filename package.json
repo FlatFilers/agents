@@ -1,0 +1,16 @@
+{
+  "name": "flatfile-agents",
+  "description": "Source code for agents that can be deployed via the dashboard",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "@vercel/ncc": "^0.36.1",
+    "eslint": "^8.57.0",
+    "prettier": "^3.2.5",
+    "typescript": "^5.1.6"
+  },
+  "scripts": {
+    "bundle": "node ./scripts/bundle.js",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,md}\""
+  }
+}

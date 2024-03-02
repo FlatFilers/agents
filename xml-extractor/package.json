@@ -1,0 +1,7 @@
+{
+  "name": "xsl-extractor",
+  "dependencies": {
+    "@flatfile/listener": "*",
+    "@flatfile/plugin-xml-extractor": "*"
+  }
+}

@@ -21,7 +21,7 @@ async function bundle() {
   )
 
   await ncc(path.join(distDir, '_entry.js'), {
-    minify: false,
+    minify: true,
     target: 'es2020',
     cache: false,
   })

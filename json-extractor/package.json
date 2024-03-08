@@ -1,5 +1,5 @@
 {
-  "name": "xsl-extractor",
+  "name": "json-extractor",
   "dependencies": {
     "@flatfile/listener": "*",
     "@flatfile/plugin-json-extractor": "*"

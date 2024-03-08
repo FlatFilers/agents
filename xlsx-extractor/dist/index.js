@@ -11220,7 +11220,7 @@ function escapeRegExpChar(char) {
         char === '*' ||
         char === '?' ||
         char === '\\') {
-        return "\\" + char;
+        return "\\".concat(char);
     }
     else {
         return char;
@@ -11242,8 +11242,8 @@ function escapeRegExpString(str) {
 function transform(pattern, separator) {
     if (separator === void 0) { separator = true; }
     if (Array.isArray(pattern)) {
-        var regExpPatterns = pattern.map(function (p) { return "^" + transform(p, separator) + "$"; });
-        return "(?:" + regExpPatterns.join('|') + ")";
+        var regExpPatterns = pattern.map(function (p) { return "^".concat(transform(p, separator), "$"); });
+        return "(?:".concat(regExpPatterns.join('|'), ")");
     }
     var separatorSplitter = '';
     var separatorMatcher = '';
@@ -11257,15 +11257,15 @@ function transform(pattern, separator) {
         separatorSplitter = separator;
         separatorMatcher = escapeRegExpString(separatorSplitter);
         if (separatorMatcher.length > 1) {
-            separatorMatcher = "(?:" + separatorMatcher + ")";
-            wildcard = "((?!" + separatorMatcher + ").)";
+            separatorMatcher = "(?:".concat(separatorMatcher, ")");
+            wildcard = "((?!".concat(separatorMatcher, ").)");
         }
         else {
-            wildcard = "[^" + separatorMatcher + "]";
+            wildcard = "[^".concat(separatorMatcher, "]");
         }
     }
-    var requiredSeparator = separator ? separatorMatcher + "+?" : '';
-    var optionalSeparator = separator ? separatorMatcher + "*?" : '';
+    var requiredSeparator = separator ? "".concat(separatorMatcher, "+?") : '';
+    var optionalSeparator = separator ? "".concat(separatorMatcher, "*?") : '';
     var segments = separator ? pattern.split(separatorSplitter) : [pattern];
     var result = '';
     for (var s = 0; s < segments.length; s++) {
@@ -11289,7 +11289,7 @@ function transform(pattern, separator) {
         if (separator && segment === '**') {
             if (currentSeparator) {
                 result += s === 0 ? '' : currentSeparator;
-                result += "(?:" + wildcard + "*?" + currentSeparator + ")*?";
+                result += "(?:".concat(wildcard, "*?").concat(currentSeparator, ")*?");
             }
             continue;
         }
@@ -11305,7 +11305,7 @@ function transform(pattern, separator) {
                 result += wildcard;
             }
             else if (char === '*') {
-                result += wildcard + "*?";
+                result += "".concat(wildcard, "*?");
             }
             else {
                 result += escapeRegExpChar(char);
@@ -11318,7 +11318,7 @@ function transform(pattern, separator) {
 
 function isMatch(regexp, sample) {
     if (typeof sample !== 'string') {
-        throw new TypeError("Sample must be a string, but " + typeof sample + " given");
+        throw new TypeError("Sample must be a string, but ".concat(typeof sample, " given"));
     }
     return regexp.test(sample);
 }
@@ -11339,7 +11339,7 @@ function isMatch(regexp, sample) {
  */
 function wildcardMatch(pattern, options) {
     if (typeof pattern !== 'string' && !Array.isArray(pattern)) {
-        throw new TypeError("The first argument must be a single pattern string or an array of patterns, but " + typeof pattern + " given");
+        throw new TypeError("The first argument must be a single pattern string or an array of patterns, but ".concat(typeof pattern, " given"));
     }
     if (typeof options === 'string' || typeof options === 'boolean') {
         options = { separator: options };
@@ -11347,14 +11347,14 @@ function wildcardMatch(pattern, options) {
     if (arguments.length === 2 &&
         !(typeof options === 'undefined' ||
             (typeof options === 'object' && options !== null && !Array.isArray(options)))) {
-        throw new TypeError("The second argument must be an options object or a string/boolean separator, but " + typeof options + " given");
+        throw new TypeError("The second argument must be an options object or a string/boolean separator, but ".concat(typeof options, " given"));
     }
     options = options || {};
     if (options.separator === '\\') {
         throw new Error('\\ is not a valid separator because it is used for escaping. Try setting the separator to `true` instead');
     }
     var regexpPattern = transform(pattern, options.separator);
-    var regexp = new RegExp("^" + regexpPattern + "$", options.flags);
+    var regexp = new RegExp("^".concat(regexpPattern, "$"), options.flags);
     var fn = isMatch.bind(null, regexp);
     fn.options = options;
     fn.pattern = pattern;

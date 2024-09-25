@@ -14,7 +14,6 @@ import {
 
 async function getValidators(event) {
   const constraints = await getConstraints(event.context.appId)
-  console.log("CONSTRAINTS API", constraints)
   return constraints.data.map((c) => {
     return {
       name: c.description,
@@ -27,11 +26,9 @@ export default function (listener) {
   listener.use(
     bulkRecordHook('**', async (records, event) => {
       if (spaceIsAutoBuild(await getSpace(event))) {
-        const fields = getFields(
+        const externalConstraintFields = getFields(
           await getSheet(event),
-        )
-        const externalConstraintFields = fields.filter(hasExternalConstraints)
-
+        ).filter(hasExternalConstraints)
         const validators = await getValidators(event)
         crossEach([records, externalConstraintFields], (record, field) => {
           getExternalConstraints(field.constraints).forEach(

@@ -7,7 +7,7 @@ export const getFields = (s) => s.data.config.fields
 export const spaceIsAutoBuild = (s) => s.data.metadata.isAutoBuildWorkingSpace
 export const getExternalConstraints = (c) =>
   c?.filter((c) => c.type == 'external')
-export const hasExternalConstraints = (f) => 
+export const hasExternalConstraints = (f) =>
   getExternalConstraints(f.constraints || []).length > 0
 export const getValidator = (v, n) => v.find((w) => w.name === n)
 export const applyConstraintToRecord = (c, r, f) => {
@@ -20,4 +20,4 @@ export const applyConstraintToRecord = (c, r, f) => {
 export const crossProduct = (...a) =>
   a.reduce((u, c) => _.flatMap(u, (a) => c.map((b) => a.concat(b))), [[]])
 export const crossEach = (a, cb) => crossProduct(...a).forEach((p) => cb(...p))
-export const getConstraints = (e) => api.constraints.list(e.context.appId)
+export const getConstraints = (a) => api.apps.getConstraints(a)

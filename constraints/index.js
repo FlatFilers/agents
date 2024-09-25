@@ -35,9 +35,6 @@ export default function (listener) {
             async ({ validator }) => {
               const constraint = await getValidator(validators, validator)
               if (constraint) {
-                console.log('constraint', constraint)
-                console.log('record', record)
-                console.log('field', field)
                 applyConstraintToRecord(constraint, record, field)
               }
             },

@@ -20,4 +20,5 @@ export const applyConstraintToRecord = (c, r, f) => {
 export const crossProduct = (...a) =>
   a.reduce((u, c) => _.flatMap(u, (a) => c.map((b) => a.concat(b))), [[]])
 export const crossEach = (a, cb) => crossProduct(...a).forEach((p) => cb(...p))
-export const getConstraints = (a) => api.apps.getConstraints(a)
+export const getConstraints = (a) =>
+  api.apps.getConstraints(a, { includeBuiltins: true })

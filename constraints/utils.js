@@ -1,14 +1,11 @@
 import api from '@flatfile/api'
 import * as _ from 'lodash'
 
-export const getSpace = (e) => api.spaces.get(e.context.spaceId)
 export const getSheet = (e) => api.sheets.get(e.context.sheetId)
 export const getFields = (s) => s.data.config.fields
-export const spaceIsAutoBuild = (s) => s.data.metadata.isAutoBuildWorkingSpace
-export const getExternalConstraints = (c) =>
-  c?.filter((c) => c.type == 'external')
-export const hasExternalConstraints = (f) =>
-  getExternalConstraints(f.constraints || []).length > 0
+export const getStoredConstraints = (c) => c?.filter((c) => c.type == 'stored')
+export const hasStoredConstraints = (f) =>
+  getStoredConstraints(f.constraints || []).length > 0
 export const getValidator = (v, n) => v.find((w) => w.name === n)
 export const applyConstraintToRecord = (c, r, f) => {
   try {

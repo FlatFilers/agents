@@ -2,13 +2,11 @@ import { bulkRecordHook } from '@flatfile/plugin-record-hook'
 import {
   applyConstraintToRecord,
   crossEach,
-  getExternalConstraints,
+  getStoredConstraints,
   getFields,
   getSheet,
-  getSpace,
   getValidator,
-  hasExternalConstraints,
-  spaceIsAutoBuild,
+  hasStoredConstraints,
   getConstraints,
 } from './utils'
 
@@ -25,22 +23,21 @@ async function getValidators(event) {
 export default function (listener) {
   listener.use(
     bulkRecordHook('**', async (records, event) => {
-      if (spaceIsAutoBuild(await getSpace(event))) {
-        const externalConstraintFields = getFields(
-          await getSheet(event),
-        ).filter(hasExternalConstraints)
-        const validators = await getValidators(event)
-        crossEach([records, externalConstraintFields], (record, field) => {
-          getExternalConstraints(field.constraints).forEach(
-            async ({ validator }) => {
-              const constraint = await getValidator(validators, validator)
-              if (constraint) {
-                applyConstraintToRecord(constraint, record, field)
-              }
-            },
-          )
-        })
-      }
+      const sheet = await getSheet(event)
+      const storedConstraintFields =
+        getFields(sheet).filter(hasStoredConstraints)
+      const validators = await getValidators(event)
+
+      crossEach([records, storedConstraintFields], (record, field) => {
+        getStoredConstraints(field.constraints).forEach(
+          async ({ validator }) => {
+            const constraint = await getValidator(validators, validator)
+            if (constraint) {
+              applyConstraintToRecord(constraint, record, field)
+            }
+          },
+        )
+      })
     }),
   )
 }

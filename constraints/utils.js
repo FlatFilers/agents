@@ -6,7 +6,7 @@ export const getFields = (s) => s.data.config.fields
 export const getStoredConstraints = (c) => c?.filter((c) => c.type == 'stored')
 export const hasStoredConstraints = (f) =>
   getStoredConstraints(f.constraints || []).length > 0
-export const getValidator = (v, n) => v.find((w) => w.name === n)
+export const getValidator = (v, n) => v.find((w) => w.validator === n)
 export const applyConstraintToRecord = (c, r, f) => {
   try {
     eval(c.function)(r.get(f.key), f.key, { config: r._config, record: r })

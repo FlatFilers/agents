@@ -14,7 +14,7 @@ async function getValidators(event) {
   const constraints = await getConstraints(event.context.appId)
   return constraints.data.map((c) => {
     return {
-      name: c.description,
+      validator: c.validator,
       function: c.function,
     }
   })

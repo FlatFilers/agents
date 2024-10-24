@@ -12,8 +12,9 @@ import {
 import validator from 'validator'
 import * as countryStateCity from 'country-state-city'
 import { DateTime } from 'luxon'
+import { autocast } from '@flatfile/plugin-autocast'
 
-const deps = { validator, countryStateCity, luxon: DateTime }
+const deps = { validator, countryStateCity, luxon: DateTime, autocast }
 
 async function getValidators(event) {
   const constraints = await getConstraints(event.context.appId)

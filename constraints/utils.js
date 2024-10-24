@@ -7,9 +7,10 @@ export const getStoredConstraints = (c) => c?.filter((c) => c.type == 'stored')
 export const hasStoredConstraints = (f) =>
   getStoredConstraints(f.constraints || []).length > 0
 export const getValidator = (v, n) => v.find((w) => w.validator === n)
-export const applyConstraintToRecord = (c, r, f) => {
+export const applyConstraintToRecord = (c, r, f, d) => {
+  const { config } = f.constraints?.find((fc) => fc.validator === c.validator)
   try {
-    eval(c.function)(r.get(f.key), f.key, { config: r._config, record: r })
+    eval(c.function)(r.get(f.key), f.key, { config, record: r, deps: d })
   } catch (e) {
     console.error(e)
   }

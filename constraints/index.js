@@ -9,6 +9,11 @@ import {
   hasStoredConstraints,
   getConstraints,
 } from './utils'
+import validator from 'validator'
+import * as countryStateCity from 'country-state-city'
+import { DateTime } from 'luxon'
+
+const deps = { validator, countryStateCity, luxon: DateTime }
 
 async function getValidators(event) {
   const constraints = await getConstraints(event.context.appId)
@@ -33,7 +38,7 @@ export default function (listener) {
           async ({ validator }) => {
             const constraint = await getValidator(validators, validator)
             if (constraint) {
-              applyConstraintToRecord(constraint, record, field)
+              applyConstraintToRecord(constraint, record, field, deps)
             }
           },
         )

@@ -11,7 +11,15 @@ export const applyConstraintToRecord = (c, r, f, d) => {
   const constraint = f.constraints?.find((fc) => fc.validator === c.validator)
   const { config = {} } = constraint || {}
   try {
-    eval(c.function)(r.get(f.key), f.key, { config, record: r, deps: d })
+    const constraintFn = c.function.startsWith('function')
+      ? c.function.includes('function constraint')
+        ? eval(
+            '(' + c.function.replace('function constraint', 'function') + ')',
+          )
+        : eval('(' + c.function + ')')
+      : eval(c.function)
+
+    constraintFn(r.get(f.key), f.key, { config, record: r, deps: d })
   } catch (e) {
     console.error(e)
   }

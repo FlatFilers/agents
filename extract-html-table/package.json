@@ -1,0 +1,7 @@
+{
+  "name": "extract-html-table",
+  "dependencies": {
+    "@flatfile/listener": "*",
+    "@flatfile/plugin-extract-html-table": "*"
+  }
+}

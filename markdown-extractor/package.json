@@ -1,0 +1,7 @@
+{
+  "name": "markdown-extractor",
+  "dependencies": {
+    "@flatfile/listener": "*",
+    "@flatfile/plugin-markdown-extractor": "*"
+  }
+}

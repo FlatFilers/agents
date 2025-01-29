@@ -11,6 +11,8 @@
   },
   "scripts": {
     "bundle": "node ./scripts/bundle.js",
-    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,md}\""
+    "format": "prettier --ignore-path .gitignore --write \"**/*.{js,jsx,ts,tsx,md}\"",
+    "version": "node ./scripts/version.js",
+    "update": "npm run version && npm run bundle"
   }
 }

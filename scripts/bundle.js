@@ -2,14 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const ncc = require('@vercel/ncc')
 
-const directories = [
-  'constraints',
-  'extract-html-table',
-  'json-extractor',
-  'markdown-extractor',
-  'xlsx-extractor',
-  'xml-extractor',
-]
+const directories = fs.readdirSync(process.cwd())
+  .filter(file => 
+    fs.statSync(path.join(process.cwd(), file)).isDirectory() && 
+    file !== 'scripts' && 
+    !file.startsWith('.')  // Exclude hidden directories
+  )
 
 async function bundle() {
   for (const agent of directories) {

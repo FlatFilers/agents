@@ -1,5 +1,5 @@
-import { MarkdownEtractor } from '@flatfile/plugin-markdown-extractor'
+import { MarkdownExtractor } from '@flatfile/plugin-markdown-extractor'
 
 export default (listener) => {
-  listener.use(MarkdownEtractor())
+  listener.use(MarkdownExtractor())
 }

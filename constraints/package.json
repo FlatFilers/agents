@@ -1,6 +1,6 @@
 {
     "name": "constraints",
     "dependencies": {
-        "@flatfile/plugin-stored-constraints": "^0.0.2"
+        "@flatfile/plugin-stored-constraints": "*"
     }
 }

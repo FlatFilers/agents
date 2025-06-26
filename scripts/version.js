@@ -40,7 +40,6 @@ for (const dir of directories) {
 			cwd: fullPath,
 			stdio: "inherit",
 		});
-
 		// Install fresh
 		execSync("npm install", {
 			cwd: fullPath,

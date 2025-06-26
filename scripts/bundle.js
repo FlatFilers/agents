@@ -2,12 +2,12 @@ const fs = require('fs')
 const path = require('path')
 const ncc = require('@vercel/ncc')
 
-const directories = fs.readdirSync(process.cwd())
-  .filter(file => 
-    fs.statSync(path.join(process.cwd(), file)).isDirectory() && 
-    file !== 'scripts' && 
-    !file.startsWith('.')  // Exclude hidden directories
-  )
+const directories = fs.readdirSync(process.cwd()).filter(
+  (file) =>
+    fs.statSync(path.join(process.cwd(), file)).isDirectory() &&
+    file !== 'scripts' &&
+    !file.startsWith('.'), // Exclude hidden directories
+)
 
 async function bundle() {
   for (const agent of directories) {
@@ -26,10 +26,9 @@ async function bundle() {
         minify: true,
         target: 'es2020',
         cache: false,
+      }).then(({ code }) => {
+        fs.writeFileSync(path.join(distDir, 'index.js'), code, 'utf8')
       })
-        .then(({ code }) => {
-          fs.writeFileSync(path.join(distDir, 'index.js'), code, 'utf8')
-        })
 
       await fs.rmSync(distDir + '/_entry.js')
       console.log(`✅ Successfully bundled ${agent}`)

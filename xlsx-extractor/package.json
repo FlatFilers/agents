@@ -2,6 +2,6 @@
   "name": "xlsx-extractor",
   "dependencies": {
     "@flatfile/listener": "*",
-    "@flatfile/plugin-xlsx-extractor": "*"
+    "@flatfile/plugin-xlsx-extractor": "^4.1.0"
   }
 }
